@@ -1,6 +1,7 @@
 package com.example.crud.Repository;
 
 import com.example.crud.Model.Person;
+import com.sun.rowset.internal.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,7 +25,9 @@ public class PersonRepo implements IPersonRepo {
 
     @Override
     public Person findPersonById(int id) {
-        return null;
+        String sql = "SELECT * FROM person.person WHERE idperson=?";
+        RowMapper<Person> rowMapper = new BeanPropertyRowMapper<>(Person.class);
+        return jdbcTemplate.queryForObject(sql,rowMapper,id);
     }
 
     @Override
@@ -34,6 +37,8 @@ public class PersonRepo implements IPersonRepo {
 
     @Override
     public boolean deletePerson(int id) {
+        String sql = "DELETE FROM person.person WHERE idperson=?";
+        jdbcTemplate.update(sql,id);
         return false;
     }
 
