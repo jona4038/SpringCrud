@@ -15,27 +15,26 @@ public class PersonService implements IPersonService {
 
     @Override
     public List<Person> fetchAll() {
-
         return personRepo.fetchAll();
     }
 
     @Override
     public Person findPersonById(int id) {
-        return null;
+        return personRepo.findPersonById(id);
     }
 
     @Override
     public boolean addPerson(Person p) {
-        return false;
+        return personRepo.addPerson(p);
     }
 
     @Override
     public boolean deletePerson(int id) {
-        return false;
+        return personRepo.deletePerson(id);
     }
 
     @Override
     public boolean updatePerson(Person p) {
-        return false;
+        return personRepo.updatePerson(p);
     }
 }

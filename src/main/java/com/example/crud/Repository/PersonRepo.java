@@ -25,25 +25,26 @@ public class PersonRepo implements IPersonRepo {
 
     @Override
     public Person findPersonById(int id) {
-        String sql = "SELECT * FROM person.person WHERE idperson=?";
+        String sql = "SELECT * FROM person.person WHERE id=?";
         RowMapper<Person> rowMapper = new BeanPropertyRowMapper<>(Person.class);
         return jdbcTemplate.queryForObject(sql,rowMapper,id);
     }
 
     @Override
     public boolean addPerson(Person p) {
-        return false;
+        String sql = "INSERT INTO person VALUES (default, ?, ?)";
+        return jdbcTemplate.update(sql, p.getFirst_name(), p.getLast_name()) >= 0;
     }
 
     @Override
     public boolean deletePerson(int id) {
-        String sql = "DELETE FROM person.person WHERE idperson=?";
-        jdbcTemplate.update(sql,id);
-        return false;
+        String sql = "DELETE FROM person WHERE id=?";
+        return jdbcTemplate.update(sql,id) >= 0;
     }
 
     @Override
     public boolean updatePerson(Person p) {
-        return false;
+        String sql = "UPDATE person SET first_name = ?, last_name = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, p.getFirst_name(), p.getLast_name(), p.getId()) >= 0;
     }
 }
